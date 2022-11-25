@@ -7,7 +7,7 @@ option go_package = "github.com/weiqiangxu/protocol/user;user";
 
 service Login {
   rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse) {} // 获取用户信息
-  rpc DeleteUser(DeleteUser) returns (CommonReply) {} // 删除用户
+  rpc DeleteUser(DeleteUserRequest) returns (CommonReply) {} // 删除用户
 }
 
 // GetUserInfoRequest request for user info
@@ -28,6 +28,6 @@ message UserInfo {
   int32 age = 3;
 }
 
-message DeleteUser {
+message DeleteUserRequest {
   int32 id = 1;
 }
