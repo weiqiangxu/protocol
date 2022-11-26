@@ -3,7 +3,7 @@ package order;
 option go_package = "github.com/weiqiangxu/protocol/order;order";
 
 
-service Login {
+service Order {
   rpc GetOrder(GetOrderRequest) returns (GetOrderResponse) {} // 获取订单
 }
 
