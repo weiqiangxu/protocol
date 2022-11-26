@@ -1,7 +1,7 @@
 syntax = "proto3";
 package user;
-import "enum.proto";
-import "error.proto";
+import "user_enum.proto";
+import "user_error.proto";
 option go_package = "github.com/weiqiangxu/protocol/user;user";
 
 message DataBase {
