@@ -1,6 +1,6 @@
 syntax = "proto3";
-import "protocol/common/common.proto";
-import "protocol/common/error.proto";
+import "user_common.proto";
+import "user_error.proto";
 package user;
 option go_package = "github.com/weiqiangxu/protocol/user;user";
 
