@@ -1,5 +1,5 @@
 #TAG := v$(shell git-cz version --patch)
-TAG := "v0.01"
+TAG := "v0.02"
 
 .PHONY: gen-go
 gen-go: export GIT_EDITOR=true
