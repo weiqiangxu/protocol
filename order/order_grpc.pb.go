@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.20.1
-// source: query.proto
+// source: order.proto
 
 package order
 
@@ -23,7 +23,6 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LoginClient interface {
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*GetOrderResponse, error)
-	GetOrderList(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*CommonReply, error)
 }
 
 type loginClient struct {
@@ -43,21 +42,11 @@ func (c *loginClient) GetOrder(ctx context.Context, in *GetOrderRequest, opts ..
 	return out, nil
 }
 
-func (c *loginClient) GetOrderList(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*CommonReply, error) {
-	out := new(CommonReply)
-	err := c.cc.Invoke(ctx, "/order.Login/GetOrderList", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // LoginServer is the server API for Login service.
 // All implementations must embed UnimplementedLoginServer
 // for forward compatibility
 type LoginServer interface {
 	GetOrder(context.Context, *GetOrderRequest) (*GetOrderResponse, error)
-	GetOrderList(context.Context, *GetOrderRequest) (*CommonReply, error)
 	mustEmbedUnimplementedLoginServer()
 }
 
@@ -67,9 +56,6 @@ type UnimplementedLoginServer struct {
 
 func (UnimplementedLoginServer) GetOrder(context.Context, *GetOrderRequest) (*GetOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrder not implemented")
-}
-func (UnimplementedLoginServer) GetOrderList(context.Context, *GetOrderRequest) (*CommonReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOrderList not implemented")
 }
 func (UnimplementedLoginServer) mustEmbedUnimplementedLoginServer() {}
 
@@ -102,24 +88,6 @@ func _Login_GetOrder_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Login_GetOrderList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOrderRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LoginServer).GetOrderList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/order.Login/GetOrderList",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoginServer).GetOrderList(ctx, req.(*GetOrderRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Login_ServiceDesc is the grpc.ServiceDesc for Login service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -131,11 +99,7 @@ var Login_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "GetOrder",
 			Handler:    _Login_GetOrder_Handler,
 		},
-		{
-			MethodName: "GetOrderList",
-			Handler:    _Login_GetOrderList_Handler,
-		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "query.proto",
+	Metadata: "order.proto",
 }
